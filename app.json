@@ -1,0 +1,13 @@
+{
+  "name": "qiskit-org",
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "HOST": {
+      "value": "0.0.0.0"
+    }
+  }
+}
