@@ -5,35 +5,27 @@ on:
   workflow_dispatch:
   # run on pushes to main branch
   push:
-    branches: [ main ]
+    branches: [main]
   # run daily at 08:00am UTC (on the default or base branch)
   # https://crontab.guru/#0_8_*_*_*
   schedule:
-    - cron: '0 8 * * *'
+    - cron: "0 8 * * *"
 
 jobs:
-  # job id/key
   build-and-deploy:
-    # job name
     name: Build and Deploy
+
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-      - name: Set up Node.js
-        uses: actions/setup-node@v1
+      - uses: actions/setup-node@v2
         with:
-          node-version: '12.x'
-      - uses: actions/cache@v2
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
-
+          node-version: "14"
+          cache: "npm"
       - run: npm ci
 
-      - name: Generate
+      - name: Build
         run: npm run generate
         env:
           AIRTABLE_API_KEY: ${{ secrets.AIRTABLE_API_KEY }}
