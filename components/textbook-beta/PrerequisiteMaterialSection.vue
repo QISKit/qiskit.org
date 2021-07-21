@@ -19,12 +19,12 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
-import { CtaClickedEventProperties } from '~/constants/segment'
+import { CtaClickedEventProp } from '~/constants/segment'
 
 interface Prerequisite {
   title: string;
   description: string;
-  segment: CtaClickedEventProperties;
+  segment: CtaClickedEventProp;
   url: string;
 }
 

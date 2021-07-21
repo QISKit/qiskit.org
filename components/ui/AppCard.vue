@@ -41,7 +41,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Component, Prop } from 'vue-property-decorator'
-import { CtaClickedEventProperties } from '~/constants/segment'
+import { CtaClickedEventProp } from '~/constants/segment'
 
 @Component
 export default class AppCard extends Vue {
@@ -51,7 +51,7 @@ export default class AppCard extends Vue {
   @Prop({ type: Array, default: () => [] }) tags!: string[]
   @Prop({ type: String, default: '' }) to!: string
   @Prop({ type: String, default: '' }) ctaLabel!: string
-  @Prop({ type: Object, required: false }) segment: CtaClickedEventProperties | undefined
+  @Prop({ type: Object, required: false }) segment: CtaClickedEventProp | undefined
   @Prop({ type: Boolean, default: false }) verticalLayout!: Boolean
 
   get ctaLink () {

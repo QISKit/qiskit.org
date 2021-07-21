@@ -1,8 +1,7 @@
-import { CtaClickedEventProperties } from '~/constants/segment'
 import {
   trackClickEvent,
   trackPage,
-  trackSearchTerm,
+  trackPerformedSearch,
   AnalyticsContext
 } from '~/plugins/segment-analytics'
 
@@ -10,7 +9,7 @@ const window: AnalyticsContext = {
   bluemixAnalytics: {
     trackEvent: jest.fn(),
     pageEvent: jest.fn(),
-    trackSearchTermEvent: jest.fn()
+    trackPerformedSearch: jest.fn()
   },
   digitalData: {
     page: {
@@ -24,20 +23,19 @@ const window: AnalyticsContext = {
   }
 }
 
-const ctaClickedEventProperties: CtaClickedEventProperties = {
-  cta: 'Join now!',
-  location: 'header'
-}
+const cta = 'Join now!'
+const location = 'header'
 
 const routeName = 'sample route'
 const title = 'sample title'
-const searchComponent = 'sample search component'
-const searchTerm = 'sample seach term'
+
+const uiElement = 'sample search component'
+const field = 'sample seach term'
 
 const commonSuite: [Function, any[], string][] = [
   [trackPage, [routeName, title], 'pageEvent'],
-  [trackClickEvent, [ctaClickedEventProperties], 'trackEvent'],
-  [trackSearchTerm, [searchComponent, searchTerm], 'trackEvent']
+  [trackClickEvent, [cta, location], 'trackEvent'],
+  [trackPerformedSearch, [uiElement, field], 'trackEvent']
 ]
 
 commonSuite.forEach(([fn, args, delegate]) => {
@@ -126,9 +124,7 @@ describe('trackClickEvent', () => {
   })
 
   it('translates the event into a Bluemix Analytics "CTA Clicked" event', () => {
-    const { cta, location } = ctaClickedEventProperties
-
-    trackClickEvent(window, ctaClickedEventProperties)
+    trackClickEvent(window, cta, location)
     expect(window.bluemixAnalytics.trackEvent).toHaveBeenCalledWith(
       'CTA Clicked',
       {
@@ -160,20 +156,20 @@ describe('trackPage', () => {
   })
 })
 
-describe('trackSearchTerm', () => {
+describe('trackPerformedSearch', () => {
   beforeEach(() => {
     window.bluemixAnalytics.trackEvent.mockClear()
   })
 
-  it('translates the event into a Bluemix Analytics "Searched Term" event', () => {
-    trackSearchTerm(window, searchComponent, searchTerm)
+  it('translates the event into a Bluemix Analytics "Performed Search" event', () => {
+    trackPerformedSearch(window, uiElement, field)
     expect(window.bluemixAnalytics.trackEvent).toHaveBeenCalledWith(
-      'Searched Term',
+      'Performed Search',
       {
         productTitle: window.digitalData.page.pageInfo.productTitle,
         category: window.digitalData.page.pageInfo.analytics.category,
-        location: searchComponent,
-        text: searchTerm
+        uiElement,
+        field
       }
     )
   })

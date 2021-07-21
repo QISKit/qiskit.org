@@ -51,12 +51,12 @@
 import Vue from 'vue'
 import { Component } from 'vue-property-decorator'
 import { textbookBetaIntroductionCourseStartLearningUrl } from '~/constants/appLinks'
-import { CtaClickedEventProperties } from '~/constants/segment'
+import { CtaClickedEventProp } from '~/constants/segment'
 
 interface Course {
   image: string;
   label: string;
-  segment: CtaClickedEventProperties;
+  segment: CtaClickedEventProp;
   url: string;
 }
 

@@ -93,9 +93,9 @@ export default class AppMegaDropdownMenu extends Vue {
     }
   }
 
-  trackSearchTerm () {
+  trackPerformedSearch () {
     if (this.segmentComponentName) {
-      this.$trackSearchTerm(this.segmentComponentName, this.textOnTheFilter)
+      this.$trackPerformedSearch(this.segmentComponentName, this.textOnTheFilter)
     }
   }
 
@@ -103,7 +103,7 @@ export default class AppMegaDropdownMenu extends Vue {
     this.removeSearchTermTrackingTimeout()
 
     this.searchTermTrackingTimeout = setTimeout(() => {
-      this.trackSearchTerm()
+      this.trackPerformedSearch()
     }, 750)
   }
 

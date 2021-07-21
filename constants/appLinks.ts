@@ -1,6 +1,6 @@
 // TODO: Refactor central links definitions: https://github.com/Qiskit/qiskit.org/issues/1566
 
-import { CtaClickedEventProperties } from '~/constants/segment'
+import { CtaClickedEventProp } from '~/constants/segment'
 
 /**
  * Represent a general link use on the site
@@ -10,7 +10,7 @@ interface GeneralLink {
   label: string
   /** Where we want to go */
   url: string
-  segment?: CtaClickedEventProperties
+  segment?: CtaClickedEventProp
   /** Text shown when leaving the cursor on the link */
   title?: string,
 }

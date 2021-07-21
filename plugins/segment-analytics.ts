@@ -1,7 +1,6 @@
 import {
-  CtaClickedEventProperties,
-  CtaClickedSegmentTrackProperties,
-  SearchedTermSegmentTrackProperties
+  CtaClickedEventSegmentSchema,
+  PerformedSearchEventSegmentSchema
 } from '~/constants/segment'
 
 /**
@@ -87,21 +86,22 @@ function trackPage (context: AnalyticsContext, routeName: string, title: string)
 /**
  * Send the information of a CTA click event to Segment.
  * @param context Bluemix Analytics configuration
- * @param properties Segment click event properties
+ * @param cta The call to action
+ * @param location Location in the UI
  */
 function trackClickEvent (
   context: AnalyticsContext,
-  customProperties: CtaClickedEventProperties
+  cta: string,
+  location: string
 ) {
   const { bluemixAnalytics, digitalData } = context
-  const { cta, location } = customProperties
 
   if (!bluemixAnalytics || !digitalData) { return }
 
   const productTitle = getOrFailProductTitle(digitalData)
   const category = getOrFailCategory(digitalData)
 
-  const segmentOptions: CtaClickedSegmentTrackProperties = {
+  const segmentOptions: CtaClickedEventSegmentSchema = {
     category,
     CTA: cta,
     location,
@@ -112,15 +112,15 @@ function trackClickEvent (
 }
 
 /**
- * Send the information of an entered search term to Segment.
+ * Send the information of a "Performed Search" event to Segment.
  * @param context Bluemix Analytics configuration
- * @param searchComponent Name of the search component
- * @param searchTerm Search term
+ * @param uiElement The UI element that was used to trigger this event
+ * @param field Search input
  */
-function trackSearchTerm (
+function trackPerformedSearch (
   context: AnalyticsContext,
-  searchComponent: string,
-  searchTerm: string
+  uiElement: string,
+  field: string
 ) {
   const { bluemixAnalytics, digitalData } = context
 
@@ -129,14 +129,14 @@ function trackSearchTerm (
   const productTitle = getOrFailProductTitle(digitalData)
   const category = getOrFailCategory(digitalData)
 
-  const eventOptions: SearchedTermSegmentTrackProperties = {
+  const eventOptions: PerformedSearchEventSegmentSchema = {
     category,
-    location: searchComponent,
     productTitle,
-    text: searchTerm
+    uiElement,
+    field
   }
 
-  bluemixAnalytics.trackEvent('Searched Term', eventOptions)
+  bluemixAnalytics.trackEvent('Performed Search', eventOptions)
 }
 
 function getOrFailProductTitle (digitalData: any): string {
@@ -178,9 +178,9 @@ function afterAnalyticsReady<S extends any[]> (callback: (...S: any[]) => void) 
 declare module 'vue/types/vue' {
   interface Vue {
     $metaInfo: { title: string }
-    $trackClickEvent(customProperties: CtaClickedEventProperties): void
+    $trackClickEvent(cta: string, location: string): void
     $trackPage(routeName: string, title: string): void
-    $trackSearchTerm(searchComponent: string, searchTerm: string): void
+    $trackPerformedSearch(uiElement: string, field: string): void
   }
 }
 
@@ -189,12 +189,12 @@ export default (_: any, inject: any) => {
   installAnalyticsOnce()
   inject('trackPage', afterAnalyticsReady(trackPage))
   inject('trackClickEvent', afterAnalyticsReady(trackClickEvent))
-  inject('trackSearchTerm', afterAnalyticsReady(trackSearchTerm))
+  inject('trackPerformedSearch', afterAnalyticsReady(trackPerformedSearch))
 }
 
 export {
   trackClickEvent,
   trackPage,
-  trackSearchTerm,
+  trackPerformedSearch,
   AnalyticsContext
 }

@@ -1,4 +1,4 @@
-import { CtaClickedEventProperties } from '~/constants/segment'
+import { CtaClickedEventProp } from '~/constants/segment'
 
 /**
  * Represent a navigation link for the menus of the site
@@ -8,7 +8,7 @@ interface NavLink {
   label: string
   /** Where we want to go */
   url: string
-  segment?: CtaClickedEventProperties
+  segment?: CtaClickedEventProp
   /** Only for <a> links. Use `_blank` to open the link in a new tab */
   target?: string
   /** Only for <a> links. Specifies the relationship between the current document
