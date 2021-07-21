@@ -1,24 +1,21 @@
 {
   "name": "qiskit.org",
-  "description": "Qiskit is an open source software development kit (SDK) for working with OpenQASM and the IBM Q quantum processors. Create quantum computing programs, compile, and execute them online in a real quantum processors.",
   "version": "1.0.0",
-  "license": "Apache-2.0",
-  "repository": "Qiskit/qiskit.org",
   "private": true,
+  "description": "Qiskit is an open source software development kit (SDK) for working with OpenQASM and the IBM Q quantum processors. Create quantum computing programs, compile, and execute them online in a real quantum processors.",
+  "repository": "Qiskit/qiskit.org",
+  "license": "Apache-2.0",
   "scripts": {
     "dev": "NODE_ENV=development nuxt-ts",
     "dev-analytics": "ENABLE_ANALYTICS=true NODE_ENV=development nuxt-ts",
     "dev-debug": "node --inspect node_modules/.bin/nuxt-ts",
     "test": "jest",
-    "build": "npm run generate",
+    "build": "nuxt-ts build",
     "start": "NODE_ENV=production nuxt-ts start",
     "lint:style": "stylelint \"**/*.{vue,css}\" --ignore-path .gitignore",
     "lint": "eslint --max-warnings 0 --ext .ts,.js,.vue . && npm run lint:style",
     "generate": "NODE_ENV=production nuxt-ts generate --fail-on-error",
     "fix-lint": "eslint --fix --ext .ts,.js,.vue . && npm run lint:style -- --fix"
-  },
-  "engines": {
-    "node": ">=12.x"
   },
   "dependencies": {
     "@carbon/colors": "^10.24.0",
@@ -26,24 +23,29 @@
     "@carbon/themes": "^10.33.0",
     "@carbon/type": "^10.27.0",
     "@carbon/vue": "^2.37.1",
+    "@nuxt/content": "^1.14.0",
+    "@nuxt/typescript-build": "^2.1.0",
+    "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/axios": "^5.13.1",
     "@qiskit-community/qiskit-vue": "^0.23.0",
     "@vue/composition-api": "^1.0.0-beta.1",
+    "airtable": "^0.8.1",
     "carbon-components": "^10.34.0",
     "cross-env": "^7.0.3",
+    "frontmatter-markdown-loader": "^3.6.2",
     "lodash": "^4.17.21",
+    "markdown-it-anchor": "^7.1.0",
+    "markdown-it-link-attributes": "^3.0.0",
     "nuxt": "^2.14.12",
     "nuxt-lazy-load": "^1.2.6",
     "ts-node": "^9.1.1",
+    "uslug": "^1.0.4",
     "vue-class-component": "^7.2.6",
     "vue-demi": "^0.9.1",
     "vue-property-decorator": "^9.1.2"
   },
   "devDependencies": {
-    "@nuxt/content": "^1.14.0",
     "@nuxt/types": "^2.15.4",
-    "@nuxt/typescript-build": "^2.1.0",
-    "@nuxt/typescript-runtime": "^2.1.0",
     "@nuxtjs/eslint-config": "^6.0.0",
     "@nuxtjs/eslint-config-typescript": "^6.0.0",
     "@nuxtjs/style-resources": "^1.0.0",
@@ -58,7 +60,6 @@
     "@typescript-eslint/eslint-plugin": "^4.22.0",
     "@typescript-eslint/parser": "^4.22.0",
     "@vue/test-utils": "^1.2.0",
-    "airtable": "^0.8.1",
     "babel-bridge": "^1.12.11",
     "babel-core": "^6.26.3",
     "eslint": "^7.25.0",
@@ -69,10 +70,7 @@
     "eslint-plugin-promise": "^5.1.0",
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.9.0",
-    "frontmatter-markdown-loader": "^3.6.2",
     "jest": "^26.6.3",
-    "markdown-it-anchor": "^7.1.0",
-    "markdown-it-link-attributes": "^3.0.0",
     "node-sass": "^5.0.0",
     "nodemon": "^2.0.7",
     "sass-loader": "^10.1.1",
@@ -82,7 +80,9 @@
     "stylelint-config-standard": "^22.0.0",
     "stylelint-scss": "^3.19.0",
     "ts-jest": "^26.5.5",
-    "uslug": "^1.0.4",
     "vue-jest": "^3.0.7"
+  },
+  "engines": {
+    "node": "12.x"
   }
 }
